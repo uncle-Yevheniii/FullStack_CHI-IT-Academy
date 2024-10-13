@@ -3,20 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="main.css" />
     <title>Homework-3</title>
+
+    <link rel="stylesheet" href="main.css" />
   </head>
   <body>
-    <div>
-      <ul id="root-list"></ul>
+    <h1>Rick and Morty Characters</h1>
 
-      <div class="nav">
-        <button id="prev" type="button">prev</button>
-        <p id="current">1</p>
-        <button id="next" type="button">next</button>
-      </div>
+    <div id="characters"></div>
+
+    <div class="pagination">
+      <button id="prev" disabled>Prev</button>
+
+      <p>
+        Page:
+        <span id="page">1</span>
+      </p>
+
+      <button id="next">Next</button>
     </div>
 
-    <script type="module" src="index.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>

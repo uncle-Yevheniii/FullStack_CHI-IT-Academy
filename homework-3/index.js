@@ -1,38 +1,65 @@
-const rootList = document.querySelector("#root-list");
-const prevBtn = document.querySelector("#prev");
-const currentPage = document.querySelector("#current");
-const nextBtn = document.querySelector("#next");
+const charactersContainer = document.getElementById("characters");
+const prevButton = document.getElementById("prev");
+const nextButton = document.getElementById("next");
 
-let page = 0;
+let currentPage = 1;
 
-prevBtn.addEventListener("click", () => {
-  if (page === 0) {
-    prevBtn.disabled = true;
+function fetchCharacters(page = 1) {
+  const data = fetch(
+    `https://rickandmortyapi.com/api/character/?page=${page}`
+  ).then((res) => res.json());
+
+  return data;
+}
+
+function displayCharacters(characters) {
+  charactersContainer.innerHTML = "";
+  characters.forEach((character) => {
+    const characterCard = document.createElement("div");
+    characterCard.classList.add("character-card");
+    characterCard.innerHTML = `
+          <img src="${character.image}" alt="${character.name}">
+          <h3>${character.name}</h3>
+          <p>Status: ${character.status}</p>
+          <p>Species: ${character.species}</p>
+        `;
+    charactersContainer.appendChild(characterCard);
+  });
+}
+
+function updatePagination(info) {
+  if (info.prev) {
+    prevButton.disabled = false;
+  } else {
+    prevButton.disabled = true;
   }
 
-  page -= 1;
-  currentPage.textContent = page;
+  if (info.next) {
+    nextButton.disabled = false;
+  } else {
+    nextButton.disabled = true;
+  }
+}
+
+function loadCharacters(page = 1) {
+  fetchCharacters(page).then((data) => {
+    if (data) {
+      displayCharacters(data.results);
+      updatePagination(data.info);
+    }
+  });
+}
+
+prevButton.addEventListener("click", () => {
+  if (currentPage > 1) {
+    currentPage -= 1;
+    loadCharacters(currentPage);
+  }
 });
-nextBtn.addEventListener("click", () => {
-  page += 1;
-  currentPage.textContent = page + 1;
+
+nextButton.addEventListener("click", () => {
+  currentPage += 1;
+  loadCharacters(currentPage);
 });
 
-const BASE_URL = "https://rickandmortyapi.com/api/character";
-
-const fetchResponse = fetch(BASE_URL).then((response) => response.json());
-
-const data = fetchResponse
-  .then((data) => {
-    const info = data.info;
-    const results = data.results;
-
-    console.log(info);
-
-    return results.map((item) => {
-      const li = document.createElement("li");
-      li.textContent = item.name;
-      rootList.appendChild(li);
-    });
-  })
-  .catch((err) => console.log(err));
+loadCharacters(currentPage);
