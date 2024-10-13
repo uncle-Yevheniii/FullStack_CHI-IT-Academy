@@ -1,6 +1,7 @@
 const charactersContainer = document.getElementById("characters");
 const prevButton = document.getElementById("prev");
 const nextButton = document.getElementById("next");
+const page = document.getElementById("page");
 
 let currentPage = 1;
 
@@ -53,12 +54,14 @@ function loadCharacters(page = 1) {
 prevButton.addEventListener("click", () => {
   if (currentPage > 1) {
     currentPage -= 1;
+    page.textContent = currentPage;
     loadCharacters(currentPage);
   }
 });
 
 nextButton.addEventListener("click", () => {
   currentPage += 1;
+  page.textContent = currentPage;
   loadCharacters(currentPage);
 });
 
