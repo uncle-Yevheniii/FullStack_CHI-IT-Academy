@@ -6,11 +6,9 @@
 
 const data = { "access-token": "qwerty" };
 
+let count = 0;
 function addParamsToRequest(params) {
-  let count = 0;
-
   return function (data) {
-    count += 1;
     return {
       ...data,
       ...params,
@@ -19,8 +17,8 @@ function addParamsToRequest(params) {
   };
 }
 const sendData = addParamsToRequest(data);
-const result1 = sendData({ name: "John", age: 30 }); //count 1
-const result2 = sendData({ city: "Kyiv", location: "UA" }); //count 2
+const result1 = sendData({ name: "John", age: 30, count: count }); //count 0
+const result2 = sendData({ city: "Kyiv", location: "UA", count: (count += 1) }); //count 1
 console.log(result1);
 console.log(result2);
 
@@ -35,16 +33,13 @@ const obj = {
   },
 };
 
-const createGetData = (name, age) => {
-  const newObj = Object.create(obj);
-  newObj.name = name;
-  newObj.age = age;
+function createBoundCaller(name, age) {
+  return obj.getData.bind({ name: name, age: age });
+}
 
-  return newObj.getData.call(newObj);
-};
-
-const getData = createGetData("John", 30);
-const getData2 = createGetData("Bob", 25);
+const callData = createBoundCaller("Bob", 25);
+callData();
+callData();
 
 /*
  * Задача — пройтися по об'єкту рекурсивно, знайти всі файли та повернути їхні імена у вигляді масиву.
