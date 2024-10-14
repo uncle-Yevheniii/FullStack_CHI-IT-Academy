@@ -6,37 +6,21 @@
 
 const data = { "access-token": "qwerty" };
 
-let count = 0;
 function addParamsToRequest(params) {
+  let count = 0;
   return function (data) {
     return {
       ...data,
       ...params,
-      count,
+      count: count++,
     };
   };
 }
 const sendData = addParamsToRequest(data);
-const result1 = sendData({ name: "John", age: 30, count: count }); //count 0
-const result2 = sendData({ city: "Kyiv", location: "UA", count: (count += 1) }); //count 1
-console.log(result1);
-console.log(result2);
+const result1 = sendData({ name: "John", age: 30 });
+const result2 = sendData({ city: "Kyiv", location: "UA" });
 
-/*
- * Вітаю, я звертався до Вас раніше проте так і не отримав відповіді. Надсилаю цей варіант рішення завдання,
- * але вважаю, що з точки зору бізнес логіки він не дуже, так як роль каунтера виконую я, а не автоматично система.
- *
- * Також додаю старий код:
- *
- * function addParamsToRequest(params) {
- *   let count = 0;
- *   return function (data) {
- *    count += 1;
- *     return {...data, ...params, count,};
- *   };
- * }
- */
-
+console.log(result1, result2);
 /*
  * Викличте його так, щоб ім'я та вік були вказані (значення неважливі).
  * Потім створіть функцію, яка буде це робити постійно при її виклику.
