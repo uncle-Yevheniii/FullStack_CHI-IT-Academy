@@ -29,17 +29,8 @@ function displayCharacters(characters) {
 }
 
 function updatePagination(info) {
-  if (info.prev) {
-    prevButton.disabled = false;
-  } else {
-    prevButton.disabled = true;
-  }
-
-  if (info.next) {
-    nextButton.disabled = false;
-  } else {
-    nextButton.disabled = true;
-  }
+  prevButton.disabled = !info.prev;
+  nextButton.disabled = !info.next;
 }
 
 function loadCharacters(page = 1) {
