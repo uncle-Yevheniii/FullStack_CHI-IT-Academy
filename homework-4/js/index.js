@@ -44,6 +44,14 @@ CHARACTERS_LIST.addEventListener("click", async (e) => {
   MODAL_WRAPPER.innerHTML = openModalCharacter(res);
 });
 
+MODAL_WRAPPER.addEventListener("click", (e) => {
+  if (e.target.hasAttribute("data-close-modal")) {
+    MODAL_WRAPPER.innerHTML = "";
+    MODAL_WRAPPER.classList.remove("open");
+  }
+});
+
+// renders
 function renderCharacters(item) {
   return `
     <div class='character-wrapper' id=${item.id} >
@@ -52,7 +60,6 @@ function renderCharacters(item) {
     </div>
   `;
 }
-
 function openModalCharacter(item) {
   MODAL_WRAPPER.classList.add("open");
   return `
@@ -70,12 +77,5 @@ function openModalCharacter(item) {
     </div>
   `;
 }
-
-MODAL_WRAPPER.addEventListener("click", (e) => {
-  if (e.target.hasAttribute("data-close-modal")) {
-    MODAL_WRAPPER.innerHTML = "";
-    MODAL_WRAPPER.classList.remove("open");
-  }
-});
 
 displayCharacters(BASE_URL);
