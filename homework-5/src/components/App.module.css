@@ -1,0 +1,31 @@
+.title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  margin-bottom: 10px;
+}
+.item {
+  padding: 20px;
+  border: 1.5px solid #212121;
+}
+.name {
+  margin-top: 5px;
+  text-align: center;
+}
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
